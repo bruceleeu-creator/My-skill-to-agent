@@ -1,6 +1,6 @@
 ---
-name: mp-implement
-description: [MattPocock] "Implement a piece of work based on a spec or set of tickets."
+name: implement
+description: "Implement a piece of work based on a spec or set of tickets."
 disable-model-invocation: true
 ---
 

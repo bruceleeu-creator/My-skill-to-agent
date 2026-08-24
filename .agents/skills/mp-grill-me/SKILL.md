@@ -1,7 +1,7 @@
 ---
-name: mp-grill-me
-description: [MattPocock] A relentless interview to sharpen a plan or design.
+name: grill-me
+description: A relentless interview to sharpen a plan or design.
 disable-model-invocation: true
 ---
 
-Run a `/grilling` session.
+Call the Skill tool with "grilling".
