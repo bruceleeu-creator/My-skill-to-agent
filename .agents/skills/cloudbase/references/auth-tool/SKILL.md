@@ -1,7 +1,7 @@
 ---
 name: auth-tool-cloudbase
 description: CloudBase auth provider configuration and login-readiness guide. This skill should be used when users need to inspect, enable, disable, or configure auth providers, publishable-key prerequisites, login methods, SMS/email sender setup, or other provider-side readiness before implementing a client or backend auth flow.
-version: 2.19.5
+version: 2.23.11
 alwaysApply: false
 ---
 
@@ -47,11 +47,13 @@ Keep local `references/...` paths for files that ship with the current skill dir
 - Treating any mention of "auth" as a provider-management task.
 - Implementing Web login in cloud functions.
 - Routing native App auth to Web SDK flows.
+- Making configuration or code changes without first following the Change Safety Protocol (`cloudbase-platform/references/protocols/change-safety-protocol.md`).
 - In an existing application, looping on provider queries after readiness is already known instead of wiring the active login and register handlers.
 
 ### Minimal checklist
 
 - Read [Authentication Activation Checklist](checklist.md) before auth implementation.
+- Anonymous login is disabled by default. The SDK initialized with `accessKey` still creates a lightweight anonymous session for API access. If the app requires authentication (e.g. admin panels, personal dashboards), enforce access control through AuthGuard or RLS policies rather than relying on the login strategy toggle.
 
 ## Overview
 
@@ -130,7 +132,7 @@ Parameter mapping for downstream Web auth code:
 - `queryAppAuth(action="getLoginConfig")` and `manageAppAuth(action="patchLoginStrategy")` return `sdkStyle: "supabase-like"` plus `sdkHints`; treat that as the preferred frontend-auth calling guide
 - `PhoneNumberLogin` controls phone OTP flows used by `auth-web` `auth.signInWithOtp({ phone })` and `auth.signUp({ phone })`
 - `EmailLogin` controls email OTP flows used by `auth-web` `auth.signInWithOtp({ email })` and `auth.signUp({ email })`
-- `UserNameLogin` controls username/password Web auth flows used by `auth-web` `auth.signUp({ username, password })` and `auth.signInWithPassword({ username, password })`
+- `UserNameLogin` controls username/password Web login flows used by `auth-web` `auth.signInWithPassword({ username, password })`; direct username/password `signUp` support is SDK/provider dependent and must be verified before use
 - If the account identifier is a plain username string, do not route it through email-only helpers such as `signInWithEmailAndPassword`
 - `UserNameLogin` also enables the broader password-login surface exposed by `auth.signInWithPassword({ username|email|phone, password })`
 - `SmsVerificationConfig.Type = "apis"` requires both `Name` and `Method`
@@ -149,7 +151,7 @@ Internal behavior of `manageAppAuth(action="patchLoginStrategy")`:
 
 ### 2. Anonymous Login
 
-> ⚠️ **Anonymous login is disabled by default for new environments.** Inactive existing environments (no anonymous login usage within the past month) have also been automatically disabled. Additionally, anonymous users are denied AI model invocation permissions by default. Only enable anonymous login when the application explicitly requires unauthenticated access and you accept the associated security trade-offs.
+> ⚠️ **Anonymous login is disabled by default.** The SDK initialized with `accessKey` still creates a lightweight anonymous session for API access. Only enable anonymous login when the application explicitly requires unauthenticated access and you accept the associated security trade-offs. Anonymous users are also denied AI model invocation permissions by default.
 
 Preferred MCP tool path: `manageAppAuth(action="patchLoginStrategy")`
 

@@ -51,9 +51,24 @@ If the user specifies "Node.js 18", use runtime `Nodejs18.15` and the path `/var
 const http = require("http");
 const { URL } = require("url");
 
+// CORS headers — default to * for simple cross-origin APIs
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
 function sendJson(res, statusCode, data) {
-  res.writeHead(statusCode, { "Content-Type": "application/json; charset=utf-8" });
+  res.writeHead(statusCode, {
+    "Content-Type": "application/json; charset=utf-8",
+    ...CORS_HEADERS,
+  });
   res.end(JSON.stringify(data));
+}
+
+function sendOptions(res) {
+  res.writeHead(204, CORS_HEADERS);
+  res.end();
 }
 
 function readJsonBody(req) {
@@ -82,6 +97,11 @@ function readJsonBody(req) {
 }
 
 const server = http.createServer(async (req, res) => {
+  // Handle CORS preflight
+  if (req.method === "OPTIONS") {
+    return sendOptions(res);
+  }
+
   const url = new URL(req.url || "/", "http://127.0.0.1");
 
   if (req.method === "GET" && url.pathname === "/health") {
@@ -113,6 +133,7 @@ server.listen(9000);
 - If you intentionally use ES Modules, use `import ...` consistently and do not rely on CommonJS-only globals such as bare `__dirname`, `require(...)`, or `module.exports`. When you need the current file path in ESM, derive it from `import.meta.url`.
 - Treat routing, method checks, and body parsing as part of the function code. With the native `http` module, parse `req.url` yourself and read the request body from the stream before calling `JSON.parse`.
 - Return JSON responses explicitly and set `Content-Type` yourself, for example `application/json; charset=utf-8`.
+- **Handle CORS headers**. Browsers block cross-origin requests without proper CORS headers. Default to `Access-Control-Allow-Origin: *` for simple APIs, and always respond to `OPTIONS` preflight requests with `200` and CORS headers.
 - Keep unsupported routes and methods explicit. Return `404` for unknown paths, and return `405` when the path exists but the HTTP method is not allowed.
 - Keep `scf_bootstrap`, `index.js`, `package.json`, and any bundled dependencies in the function directory that will be uploaded.
 
@@ -140,9 +161,24 @@ That combination avoids the common ESM pitfall where `__dirname` is not defined.
 const http = require("http");
 const { URL } = require("url");
 
+// CORS headers — default to * for simple cross-origin APIs
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
 function sendJson(res, statusCode, data) {
-  res.writeHead(statusCode, { "Content-Type": "application/json; charset=utf-8" });
+  res.writeHead(statusCode, {
+    "Content-Type": "application/json; charset=utf-8",
+    ...CORS_HEADERS,
+  });
   res.end(JSON.stringify(data));
+}
+
+function sendOptions(res) {
+  res.writeHead(204, CORS_HEADERS);
+  res.end();
 }
 
 function readJsonBody(req) {
@@ -171,6 +207,11 @@ function readJsonBody(req) {
 }
 
 const server = http.createServer(async (req, res) => {
+  // Handle CORS preflight
+  if (req.method === "OPTIONS") {
+    return sendOptions(res);
+  }
+
   const url = new URL(req.url || "/", "http://127.0.0.1");
 
   if (url.pathname === "/users" && req.method === "POST") {
@@ -215,7 +256,9 @@ Express 5 note: `app.all("/{*splat}", (req, res) => {` is the safe catch-all for
 
 ## End-to-end deployment lifecycle
 
-Follow these steps in order when creating an HTTP Function:
+This document covers the **managed-runtime** HTTP Function (ships `scf_bootstrap`, runs on a language runtime, packaged as zip). If the function instead needs custom system libraries or an arbitrary runtime, deploy it from a container image (`Runtime: CustomImage`) and read `./http-functions-custom-image.md` — the runtime contract (web server on port `9000`, CORS, security rules) is identical, only the packaging and deployment differ.
+
+Follow these steps in order when creating a managed-runtime HTTP Function:
 
 1. **Write the function code** — create the directory with `index.js`, `scf_bootstrap`, and `package.json`.
 2. **Deploy with `manageFunctions`** — set `type: "HTTP"`, `protocolType: "HTTP"`, and `runtime` explicitly.
@@ -341,5 +384,6 @@ wss.on("connection", (ws) => {
 ## When to stop and reroute
 
 - If the task is actually a timer-triggered or SDK-invoked serverless function, reroute to Event Functions.
+- If the HTTP Function needs custom system packages or an arbitrary runtime but should stay SCF request-driven and scale to zero, deploy from a container image — read `./http-functions-custom-image.md`.
 - If the task needs long-lived containers, custom system packages, or broader service architecture, reroute to `cloudrun-development`.
 - If the task is only about HTTP API calling patterns rather than implementation, reroute to `http-api`.
