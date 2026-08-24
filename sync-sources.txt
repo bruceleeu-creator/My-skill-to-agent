@@ -1,0 +1,64 @@
+# 技能上游同步映射表：上游仓库|仓库内路径|本地目标路径
+# 每周一由 .github/workflows/sync-upstream-skills.yml 自动拉取更新
+# 只更新已有技能，不删除文件、不新增技能；来源不明的技能不放进本表
+
+# --- mattpocock/skills（本地 mp- 前缀）---
+mattpocock/skills|skills/engineering/ask-matt|.agents/skills/mp-ask-matt
+mattpocock/skills|skills/engineering/code-review|.agents/skills/mp-code-review
+mattpocock/skills|skills/engineering/codebase-design|.agents/skills/mp-codebase-design
+mattpocock/skills|skills/engineering/diagnosing-bugs|.agents/skills/mp-diagnosing-bugs
+mattpocock/skills|skills/engineering/domain-modeling|.agents/skills/mp-domain-modeling
+mattpocock/skills|skills/engineering/grill-with-docs|.agents/skills/mp-grill-with-docs
+mattpocock/skills|skills/engineering/implement|.agents/skills/mp-implement
+mattpocock/skills|skills/engineering/improve-codebase-architecture|.agents/skills/mp-improve-codebase-architecture
+mattpocock/skills|skills/engineering/prototype|.agents/skills/mp-prototype
+mattpocock/skills|skills/engineering/research|.agents/skills/mp-research
+mattpocock/skills|skills/engineering/resolving-merge-conflicts|.agents/skills/mp-resolving-merge-conflicts
+mattpocock/skills|skills/engineering/setup-matt-pocock-skills|.agents/skills/mp-setup-matt-pocock-skills
+mattpocock/skills|skills/engineering/tdd|.agents/skills/mp-tdd
+mattpocock/skills|skills/engineering/to-spec|.agents/skills/mp-to-spec
+mattpocock/skills|skills/engineering/to-tickets|.agents/skills/mp-to-tickets
+mattpocock/skills|skills/engineering/triage|.agents/skills/mp-triage
+mattpocock/skills|skills/engineering/wayfinder|.agents/skills/mp-wayfinder
+mattpocock/skills|skills/engineering/wizard|.agents/skills/mp-wizard
+mattpocock/skills|skills/productivity/grill-me|.agents/skills/mp-grill-me
+mattpocock/skills|skills/productivity/grilling|.agents/skills/mp-grilling
+mattpocock/skills|skills/productivity/handoff|.agents/skills/mp-handoff
+mattpocock/skills|skills/productivity/teach|.agents/skills/mp-teach
+mattpocock/skills|skills/productivity/to-questionnaire|.agents/skills/mp-to-questionnaire
+mattpocock/skills|skills/productivity/wait-what|.agents/skills/mp-wait-what
+mattpocock/skills|skills/productivity/writing-for-agents|.agents/skills/mp-writing-for-agents
+mattpocock/skills|skills/misc/git-guardrails-claude-code|.agents/skills/mp-git-guardrails-claude-code
+mattpocock/skills|skills/misc/migrate-to-shoehorn|.agents/skills/mp-migrate-to-shoehorn
+mattpocock/skills|skills/misc/scaffold-exercises|.agents/skills/mp-scaffold-exercises
+mattpocock/skills|skills/misc/setup-pre-commit|.agents/skills/mp-setup-pre-commit
+mattpocock/skills|skills/in-progress/claude-handoff|.agents/skills/mp-claude-handoff
+mattpocock/skills|skills/in-progress/loop-me|.agents/skills/mp-loop-me
+mattpocock/skills|skills/in-progress/setup-ts-deep-modules|.agents/skills/mp-setup-ts-deep-modules
+mattpocock/skills|skills/in-progress/writing-beats|.agents/skills/mp-writing-beats
+mattpocock/skills|skills/in-progress/writing-fragments|.agents/skills/mp-writing-fragments
+mattpocock/skills|skills/in-progress/writing-shape|.agents/skills/mp-writing-shape
+
+# --- anthropics/skills 官方 ---
+anthropics/skills|skills/canvas-design|.agents/skills/canvas-design
+anthropics/skills|skills/frontend-design|.agents/skills/frontend-design
+anthropics/skills|skills/webapp-testing|.agents/skills/webapp-testing
+
+# --- obra/superpowers ---
+obra/superpowers|skills/brainstorming|.agents/skills/brainstorming
+obra/superpowers|skills/requesting-code-review|.agents/skills/requesting-code-review
+obra/superpowers|skills/systematic-debugging|.agents/skills/systematic-debugging
+obra/superpowers|skills/test-driven-development|.agents/skills/test-driven-development
+obra/superpowers|skills/using-superpowers|.agents/skills/using-superpowers
+obra/superpowers|skills/writing-plans|.agents/skills/writing-plans
+
+# --- vercel-labs/agent-skills（本地 vercel- 前缀）---
+vercel-labs/agent-skills|skills/react-best-practices|.agents/skills/vercel-react-best-practices
+vercel-labs/agent-skills|skills/react-native-skills|.agents/skills/vercel-react-native-skills
+vercel-labs/agent-skills|skills/react-view-transitions|.agents/skills/vercel-react-view-transitions
+vercel-labs/agent-skills|skills/web-design-guidelines|.agents/skills/web-design-guidelines
+
+# 以下技能来源未确认，暂不自动同步（cloudbase、diagnose、design-taste-frontend、
+# git-commit、github-actions-docs、hallmark、python-performance-optimization、
+# sleek-design-mobile-apps、tdd、to-prd、typescript-advanced-types、grill-me、
+# grill-with-docs、improve-codebase-architecture）
