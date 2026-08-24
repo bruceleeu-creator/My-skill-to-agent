@@ -37,6 +37,6 @@ git add -A && git commit -m "sync: update skills" && git push
 
 ## 约定
 
-- 主机（Windows）上不安装 `mp-*`（Matt Pocock 系列）与 superpowers 系列（`using-superpowers`、`brainstorming`、`writing-plans`、`systematic-debugging`、`test-driven-development`、`grill-me`、`grill-with-docs`、`improve-codebase-architecture`）——主人已明确删除过；仓库仅作存档。
+- 主机（Windows）上不安装 `mp-*`（Matt Pocock 系列）与 superpowers 系列（`using-superpowers`、`brainstorming`、`writing-plans`、`systematic-debugging`、`test-driven-development`、`requesting-code-review`、`grill-me`、`grill-with-docs`、`improve-codebase-architecture`）——主人已明确删除过；仓库仅作存档。
 - skill 一律真实目录副本，不使用跨工具符号链接。
 - 每个 skill 必须有带 `name` + `description` 的 frontmatter，否则 skills-to-agents 会报错。
