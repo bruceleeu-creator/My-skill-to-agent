@@ -4,7 +4,7 @@
 
 ## 结构
 
-- `.agents/skills/<name>/SKILL.md` — 全部 skill（单一事实来源，105 个）
+- `.agents/skills/<name>/SKILL.md` — 全部 skill（单一事实来源，120 个）
 - `AGENTS.md` — 由 skills-to-agents 自动生成的技能清单（勿手改）
 - `.github/workflows/update-agents-skills.yml` — 推送后 CI 自动重建 AGENTS.md
 
