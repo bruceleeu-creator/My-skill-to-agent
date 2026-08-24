@@ -16,6 +16,7 @@ jobs:
       - name: Build AGENTS.md from skills
         uses: dave1010/skills-to-agents@v1
         with:
+          skills-dir: .agents/skills
           agents-path: AGENTS.md
 
       - name: Commit and push if changed
